@@ -9,19 +9,23 @@
       <% completed = task.completed ? "fa-solid fa-check text-success" : "fa-solid fa-xmark text-danger" %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
+          <%# Lien pour basculer l'état complété, utilisant PATCH vers task_path %>
           <a href="<%= task_path(task, task: { completed: !task.completed }) %>"
              data-turbo-method="patch"
-             data-turbo-confirm="Please confirm"
+             data-turbo-confirm="Please confirm" <%# Optionnel, confirmation pour le toggle %>
              class="me-2">
             <i class="<%= completed %>"></i>
           </a>
           <%= link_to task.title, task_path(task), class: "fw-bold me-3" %>
         </div>
         <div>
+          <%# Lien pour éditer la tâche %>
           <%= link_to edit_task_path(task), class: "btn btn-sm btn-warning me-2" do %>
             <i class="fa-solid fa-pen-to-square"></i> Edit
           <% end %>
-          <%= link_to tasks_path(task),
+          <%# Lien pour supprimer la tâche %>
+          <%# CORRECTION ICI : Utilise task_path(task) au lieu de tasks_path(task) %>
+          <%= link_to task_path(task), # <-- Corrigé ici
             data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
             class: "btn btn-sm btn-danger" do %>
             <i class="fa-solid fa-trash"></i> Delete
