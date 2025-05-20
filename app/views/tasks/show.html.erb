@@ -1,0 +1,23 @@
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-body">
+      <h1 class="card-title mb-4">Title: <%= @task.title %></h1>
+      <p class="mb-3"><strong>Details:</strong> <%= @task.details %></p>
+
+      <% completed_icon = @task.completed ? "fa-solid fa-check text-success" : "fa-solid fa-xmark text-danger" %>
+      <% status_text = @task.completed ? "completed" : "not completed" %>
+
+      <p class="mb-3">
+        <a href="<%= task_path(@task, task: { completed: !@task.completed }) %>"
+           data-turbo-method="patch"
+           data-turbo-confirm="Please confirm"
+           class="me-2">
+          <i class="<%= completed_icon %>"></i>
+        </a>
+        This task is <strong><%= status_text %></strong>
+      </p>
+
+      <%= link_to "Back to all tasks", tasks_path, class: "btn btn-secondary" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="container my-4">
+  <h1 class="mb-4">My Tasks</h1>
+  <p>
+    <%= link_to "Add a new task", new_task_path, class: "btn btn-primary" %>
+  </p>
+
+  <ul class="list-group">
+    <% @tasks.each do |task| %>
+      <% completed = task.completed ? "fa-solid fa-check text-success" : "fa-solid fa-xmark text-danger" %>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+          <a href="<%= task_path(task, task: { completed: !task.completed }) %>"
+             data-turbo-method="patch"
+             data-turbo-confirm="Please confirm"
+             class="me-2">
+            <i class="<%= completed %>"></i>
+          </a>
+          <%= link_to task.title, task_path(task), class: "fw-bold me-3" %>
+        </div>
+        <div>
+          <%= link_to edit_task_path(task), class: "btn btn-sm btn-warning me-2" do %>
+            <i class="fa-solid fa-pen-to-square"></i> Edit
+          <% end %>
+          <%= link_to tasks_path(task),
+            data: { turbo_method: :delete, turbo_confirm: "Are you sure?" },
+            class: "btn btn-sm btn-danger" do %>
+            <i class="fa-solid fa-trash"></i> Delete
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
